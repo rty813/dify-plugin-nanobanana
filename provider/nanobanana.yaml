@@ -1,0 +1,50 @@
+identity:
+  author: "doufu"
+  name: "nanobanana"
+  label:
+    en_US: "Gemini Image Generator"
+    zh_Hans: "Gemini 图片生成器"
+    pt_BR: "Gemini Image Generator"
+  description:
+    en_US: "Generate images using Gemini 3 Pro Image Preview"
+    zh_Hans: "使用 Gemini 3 Pro 图片预览生成图片"
+    pt_BR: "Gerar imagens usando Gemini 3 Pro Image Preview"
+  icon: "icon.svg"
+
+credentials_for_provider:
+  base_url:
+    type: "text-input"
+    required: true
+    placeholder:
+      en_US: "https://privnode.com"
+      zh_Hans: "https://privnode.com"
+      pt_BR: "https://privnode.com"
+    help:
+      en_US: "Base URL for the Gemini API endpoint"
+      zh_Hans: "Gemini API 端点的基础 URL"
+      pt_BR: "URL base para o endpoint da API Gemini"
+    label:
+      zh_Hans: "Base URL"
+      en_US: "Base URL"
+      pt_BR: "Base URL"
+  api_key:
+    type: "secret-input"
+    required: true
+    placeholder:
+      en_US: "Enter your API Key"
+      zh_Hans: "请输入你的 API Key"
+      pt_BR: "Insira sua API Key"
+    help:
+      en_US: "API Key is used to authenticate requests to the Gemini API"
+      zh_Hans: "API Key 用于认证请求到 Gemini API"
+      pt_BR: "API Key é usada para autenticar solicitações à API Gemini"
+    label:
+      zh_Hans: "API Key"
+      en_US: "API Key"
+      pt_BR: "API Key"
+
+tools:
+  - tools/nanobanana.yaml
+extra:
+  python:
+    source: provider/nanobanana.py

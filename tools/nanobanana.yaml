@@ -1,0 +1,84 @@
+identity:
+  name: "nanobanana"
+  author: "doufu"
+  label:
+    en_US: "Gemini Image Generator"
+    zh_Hans: "Gemini 图片生成器"
+    pt_BR: "Gemini Image Generator"
+description:
+  human:
+    en_US: "Generate images using text prompts and reference images with Gemini 3 Pro"
+    zh_Hans: "使用文字提示词和参考图片通过 Gemini 3 Pro 生成图片"
+    pt_BR: "Gerar imagens usando prompts de texto e imagens de referência com Gemini 3 Pro"
+  llm: "A tool to generate images based on text prompts and optional reference images (up to 10) using Gemini 3 Pro Image Preview model"
+parameters:
+  - name: prompt
+    type: string
+    required: true
+    label:
+      en_US: Prompt
+      zh_Hans: 提示词
+      pt_BR: Prompt
+    human_description:
+      en_US: "Text description for image generation"
+      zh_Hans: "用于生成图片的文字描述"
+      pt_BR: "Descrição de texto para geração de imagem"
+    llm_description: "The text prompt that describes what image to generate"
+    form: llm
+  - name: reference_images
+    type: files
+    required: false
+    label:
+      en_US: Reference Images
+      zh_Hans: 参考图片
+      pt_BR: Imagens de Referência
+    human_description:
+      en_US: "Reference images for generation (up to 10 images)"
+      zh_Hans: "用于生成的参考图片（最多10张）"
+      pt_BR: "Imagens de referência para geração (até 10 imagens)"
+    llm_description: "Optional reference images to guide the image generation process, maximum 10 images"
+    form: form
+  - name: resolution
+    type: string
+    required: false
+    label:
+      en_US: Resolution
+      zh_Hans: 分辨率
+      pt_BR: Resolução
+    human_description:
+      en_US: "Output image resolution, one of 1K, 2K, 4K"
+      zh_Hans: "输出图片分辨率，可选 1K、2K、4K"
+      pt_BR: "Resolução da imagem de saída, uma de 1K, 2K, 4K"
+    llm_description: "Image resolution, valid values: 1K, 2K, 4K; default 2K if omitted"
+    form: form
+  - name: timeout
+    type: number
+    required: false
+    label:
+      en_US: Timeout (seconds)
+      zh_Hans: 超时时间（秒）
+      pt_BR: Tempo limite (segundos)
+    human_description:
+      en_US: "Request timeout in seconds, default 300s"
+      zh_Hans: "请求超时时间（秒），默认 300 秒"
+      pt_BR: "Tempo limite de requisição em segundos, padrão 300s"
+    llm_description: "Request timeout in seconds; default to 300 if omitted or invalid"
+    form: form
+    default: 300
+  - name: retry
+    type: number
+    required: false
+    label:
+      en_US: Retry Count
+      zh_Hans: 重试次数
+      pt_BR: Contagem de tentativas
+    human_description:
+      en_US: "Number of retry attempts when request fails, default 0"
+      zh_Hans: "请求失败时的重试次数，默认 0 次"
+      pt_BR: "Número de tentativas de nova requisição quando falhar, padrão 0"
+    llm_description: "How many times to retry when the API request fails; must be a non-negative integer, default 0"
+    form: form
+    default: 0
+extra:
+  python:
+    source: tools/nanobanana.py
