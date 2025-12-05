@@ -76,7 +76,7 @@ python -m main
 
 | 参数 | 类型 | 必填 | 说明 | 示例 |
 |------|------|------|------|------|
-| `base_url` | 文本 | ✅ | Gemini API 端点的基础 URL | `https://privnode.com` |
+| `base_url` | 文本 | ✅ | Gemini API 端点的基础 URL | `your_base_url_here` |
 | `api_key` | 密钥 | ✅ | 用于认证的 API 密钥 | `your_api_key_here` |
 
 ### 环境变量
@@ -225,17 +225,6 @@ A: 单次调用生成一张图片，如需多张请多次调用工具。
 ## 🤝 贡献
 
 欢迎提交 Issue 和 Pull Request！
-
-## 📮 联系方式
-
-- **作者**: doufu
-- **项目主页**: [GitHub](https://github.com/doufu/nanobanana)
-- **问题反馈**: [Issues](https://github.com/doufu/nanobanana/issues)
-
-## 🙏 致谢
-
-- [Dify](https://dify.ai) - 强大的 LLM 应用开发平台
-- [Google Gemini](https://deepmind.google/technologies/gemini/) - 先进的 AI 模型
 
 ---
 
