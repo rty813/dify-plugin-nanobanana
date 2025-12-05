@@ -130,7 +130,7 @@ class NanobananaTool(Tool):
             elif resolution == "4K":
                 model_suffix = "-4k"
 
-            # 构建完整的 URL（base_url 只需要到域名，例如 https://privnode.com）
+            # 构建完整的 URL（base_url 只需要到域名，例如 https://xxxx.com）
             full_url = f"{base_url}/v1beta/models/gemini-3-pro-image-preview{model_suffix}:generateContent"
 
             logger.info(
