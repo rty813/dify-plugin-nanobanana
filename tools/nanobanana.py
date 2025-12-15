@@ -205,20 +205,53 @@ class NanobananaTool(Tool):
             # 提取生成的图片
             if "candidates" in result and len(result["candidates"]) > 0:
                 candidate = result["candidates"][0]
-                logger.info("检测到 candidates, count=%s（响应按 Markdown 文本处理）", len(result["candidates"]))
+                logger.info("检测到 candidates, count=%s", len(result["candidates"]))
                 if "content" in candidate and "parts" in candidate["content"]:
-                    logger.info("candidate.content.parts 数量: %s", len(candidate["content"]["parts"]))
-                    for part in candidate["content"]["parts"]:
+                    parts = candidate["content"].get("parts") or []
+                    logger.info("candidate.content.parts 数量: %s", len(parts))
+
+                    # 优先处理 inlineData（图片/二进制）
+                    for part in parts:
+                        if not isinstance(part, dict):
+                            continue
+                        inline_data = part.get("inlineData")
+                        if inline_data is None:
+                            continue
+                        if not isinstance(inline_data, dict):
+                            logger.warning("inlineData 字段不是 dict, type=%s", type(inline_data))
+                            continue
+
+                        data_b64 = inline_data.get("data") or ""
+                        mime_type = inline_data.get("mimeType") or "application/octet-stream"
+                        if not data_b64:
+                            logger.warning("inlineData 缺少 data 字段，跳过该 part")
+                            continue
+
+                        try:
+                            blob = base64.b64decode(data_b64)
+                        except Exception:
+                            logger.warning("inlineData.data base64 解码失败, 尝试补齐 padding", exc_info=True)
+                            data_b64_padded = data_b64 + ("=" * ((4 - len(data_b64) % 4) % 4))
+                            blob = base64.b64decode(data_b64_padded)
+
+                        logger.info("检测到 inlineData, mimeType=%s, blob_bytes=%s", mime_type, len(blob))
+                        yield self.create_blob_message(blob, meta={"mime_type": mime_type})
+                        return
+
+                    # 兜底：处理文本返回
+                    for part in parts:
+                        if not isinstance(part, dict):
+                            continue
                         if "text" in part:
                             text = part.get("text") or ""
                             logger.info("检测到文本内容, 直接返回文本")
-                            # 直接返回模型返回的 text 字段内容
                             yield self.create_text_message(text)
                             return
-                    # 如果没有找到 text 字段，返回完整响应用于调试
-                    logger.error("未在响应 parts 中找到 text 字段, 返回完整响应用于调试")
+
+                    # 如果没有找到 inlineData/text 字段，返回完整响应用于调试
+                    logger.error("未在响应 parts 中找到 inlineData/text 字段, 返回完整响应用于调试")
                     yield self.create_json_message({
-                        "message": "未在响应 parts 中找到 text 字段",
+                        "message": "未在响应 parts 中找到 inlineData/text 字段",
                         "response": result
                     })
             else:

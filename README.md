@@ -1,6 +1,6 @@
 # Nanobanana - Gemini 图片生成器
 
-[![Version](https://img.shields.io/badge/version-0.0.1-blue.svg)](https://github.com/doufu/nanobanana)
+[![Version](https://img.shields.io/badge/version-0.0.2-blue.svg)](https://github.com/doufu/nanobanana)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Dify Plugin](https://img.shields.io/badge/Dify-Plugin-orange.svg)](https://dify.ai)
 
